@@ -44,7 +44,7 @@ export default function GuideForm({ steps }: GuideFormProps) {
       })
 
       const results = await Promise.all(updates)
-      const hasError = results.some((r) => !r.success)
+      const hasError = results.some((r: { success: boolean }) => !r.success)
 
       if (hasError) {
         setError('일부 저장에 실패했습니다.')
