@@ -97,7 +97,7 @@ export default async function CaseDetailPage({
           )}
           {caseItem.hashtags && caseItem.hashtags.length > 0 && (
             <div className="flex flex-wrap gap-2">
-              {caseItem.hashtags.map((tag, idx) => (
+              {caseItem.hashtags.map((tag: string, idx: number) => (
                 <span
                   key={idx}
                   className="px-3 py-1 bg-gray-100 text-gray-700 rounded-button text-sm"
