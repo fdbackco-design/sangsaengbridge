@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 
 export default function Header() {
@@ -12,7 +13,14 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* 로고 */}
           <Link href="/" className="flex items-center">
-            <span className="text-xl font-bold text-burgundy-700">상생 브릿지</span>
+            <Image
+              src="/logo.svg"
+              alt="상생 브릿지"
+              width={180}
+              height={32}
+              className="h-8 w-auto"
+              priority
+            />
           </Link>
 
           {/* 우측 아이콘들 */}
