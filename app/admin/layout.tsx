@@ -1,0 +1,106 @@
+import { requireAdmin } from '@/lib/auth/guard'
+import Link from 'next/link'
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+
+export default async function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const { user } = await requireAdmin()
+
+  const supabase = createClient()
+  const { data: { session } } = await supabase.auth.getSession()
+
+  const handleSignOut = async () => {
+    'use server'
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    redirect('/admin/login')
+  }
+
+  return (
+    <div className="min-h-screen bg-cream-50">
+      <nav className="bg-white shadow-soft border-b border-gray-200">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <Link href="/admin" className="text-xl font-bold text-burgundy-700">
+              관리자 대시보드
+            </Link>
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-600">{user?.email}</span>
+              <form action={handleSignOut}>
+                <button
+                  type="submit"
+                  className="px-4 py-2 text-sm text-gray-700 hover:text-burgundy-700"
+                >
+                  로그아웃
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex flex-col md:flex-row gap-6">
+          <aside className="w-full md:w-64 bg-white rounded-card shadow-soft p-4 h-fit">
+            <nav className="space-y-2">
+              <Link
+                href="/admin"
+                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
+              >
+                대시보드
+              </Link>
+              <Link
+                href="/admin/cases"
+                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
+              >
+                성공사례 관리
+              </Link>
+              <Link
+                href="/admin/banners"
+                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
+              >
+                배너 관리
+              </Link>
+              <Link
+                href="/admin/progress"
+                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
+              >
+                진행상황 관리
+              </Link>
+              <Link
+                href="/admin/press"
+                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
+              >
+                언론보도 관리
+              </Link>
+              <Link
+                href="/admin/about"
+                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
+              >
+                소개 편집
+              </Link>
+              <Link
+                href="/admin/guide"
+                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
+              >
+                이용안내 편집
+              </Link>
+              <Link
+                href="/admin/locations"
+                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
+              >
+                공장 위치 관리
+              </Link>
+            </nav>
+          </aside>
+
+          <main className="flex-1">{children}</main>
+        </div>
+      </div>
+    </div>
+  )
+}
