@@ -15,15 +15,22 @@ export const caseSchema = z.object({
   slug: z.string().min(1, '슬러그를 입력해주세요'),
   summary: z.string().optional(),
   content_markdown: z.string().optional(),
-  category_id: z.string().uuid().optional(),
+  category_id: z.string().uuid().optional().nullable(),
   thumbnail_image_1: z.string().url().min(1, '썸네일 이미지 1을 업로드해주세요'),
-  thumbnail_image_2: z.string().url().optional(),
-  detail_image: z.string().url().optional(),
+  thumbnail_image_2: z.string().url().optional().or(z.literal('')),
+  detail_image: z.string().url().optional().or(z.literal('')),
   hashtags: z.array(z.string()).optional(),
   is_featured: z.boolean().default(false),
 })
 
 export const bannerSchema = z.object({
+  image_url: z.string().url().min(1, '이미지를 업로드해주세요'),
+  link_url: z.string().url().optional().or(z.literal('')),
+  is_active: z.boolean().default(true),
+  sort_order: z.number().int().default(0),
+})
+
+export const middleBannerSchema = z.object({
   image_url: z.string().url().min(1, '이미지를 업로드해주세요'),
   link_url: z.string().url().optional().or(z.literal('')),
   is_active: z.boolean().default(true),
@@ -41,9 +48,9 @@ export const progressSchema = z.object({
 
 export const pressSchema = z.object({
   title: z.string().min(1, '제목을 입력해주세요'),
-  thumbnail_url: z.string().url().optional(),
-  published_date: z.string().optional(),
-  summary: z.string().optional(),
+  thumbnail_url: z.string().url().optional().or(z.literal('')),
+  published_date: z.string().optional().or(z.literal('')),
+  summary: z.string().optional().or(z.literal('')),
   external_link: z.string().url().optional().or(z.literal('')),
 })
 

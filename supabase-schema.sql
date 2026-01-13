@@ -22,6 +22,17 @@ CREATE TABLE IF NOT EXISTS banners (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- 2-1. 중간 배너 테이블
+CREATE TABLE IF NOT EXISTS middle_banners (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  image_url TEXT NOT NULL,
+  link_url TEXT,
+  is_active BOOLEAN DEFAULT true,
+  sort_order INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- 3. 성공사례 카테고리 (enum 대신 테이블로 관리)
 CREATE TABLE IF NOT EXISTS case_categories (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -151,6 +162,7 @@ CREATE INDEX IF NOT EXISTS idx_cases_category ON cases(category_id);
 CREATE INDEX IF NOT EXISTS idx_cases_slug ON cases(slug);
 CREATE INDEX IF NOT EXISTS idx_cases_featured ON cases(is_featured);
 CREATE INDEX IF NOT EXISTS idx_banners_active ON banners(is_active, sort_order);
+CREATE INDEX IF NOT EXISTS idx_middle_banners_active ON middle_banners(is_active, sort_order);
 CREATE INDEX IF NOT EXISTS idx_progress_stage ON progress(stage);
 CREATE INDEX IF NOT EXISTS idx_press_date ON press(published_date DESC);
 CREATE INDEX IF NOT EXISTS idx_quotes_created ON quotes(created_at DESC);
@@ -169,6 +181,9 @@ CREATE TRIGGER update_profiles_updated_at BEFORE UPDATE ON profiles
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_banners_updated_at BEFORE UPDATE ON banners
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_middle_banners_updated_at BEFORE UPDATE ON middle_banners
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_cases_updated_at BEFORE UPDATE ON cases
@@ -193,6 +208,7 @@ CREATE TRIGGER update_guide_steps_updated_at BEFORE UPDATE ON guide_steps
 -- RLS 활성화
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE banners ENABLE ROW LEVEL SECURITY;
+ALTER TABLE middle_banners ENABLE ROW LEVEL SECURITY;
 ALTER TABLE case_categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cases ENABLE ROW LEVEL SECURITY;
 ALTER TABLE progress ENABLE ROW LEVEL SECURITY;
@@ -245,6 +261,38 @@ CREATE POLICY "Only admins can update banners"
 
 CREATE POLICY "Only admins can delete banners"
   ON banners FOR DELETE
+  USING (
+    EXISTS (
+      SELECT 1 FROM profiles
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+-- 2-1. Middle Banners 정책
+CREATE POLICY "Middle banners are viewable by everyone"
+  ON middle_banners FOR SELECT
+  USING (true);
+
+CREATE POLICY "Only admins can insert middle banners"
+  ON middle_banners FOR INSERT
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM profiles
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "Only admins can update middle banners"
+  ON middle_banners FOR UPDATE
+  USING (
+    EXISTS (
+      SELECT 1 FROM profiles
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "Only admins can delete middle banners"
+  ON middle_banners FOR DELETE
   USING (
     EXISTS (
       SELECT 1 FROM profiles

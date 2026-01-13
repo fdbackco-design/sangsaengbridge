@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import BannerSlider from '@/components/BannerSlider'
+import MiddleBanner from '@/components/MiddleBanner'
 import CaseGrid from '@/components/CaseGrid'
 import ProgressCarousel from '@/components/ProgressCarousel'
 import GuideSteps from '@/components/GuideSteps'
@@ -12,6 +13,13 @@ export default async function HomePage() {
   // 배너 조회
   const { data: banners } = await supabase
     .from('banners')
+    .select('*')
+    .eq('is_active', true)
+    .order('sort_order', { ascending: true })
+
+  // 중간 배너 조회
+  const { data: middleBanners } = await supabase
+    .from('middle_banners')
     .select('*')
     .eq('is_active', true)
     .order('sort_order', { ascending: true })
@@ -58,15 +66,22 @@ export default async function HomePage() {
     .select('*')
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-cream-50 min-h-screen">
       {/* 배너 슬라이더 */}
       {banners && banners.length > 0 && (
-        <section className="mb-8">
+        <section className="pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12">
           <BannerSlider banners={banners} />
         </section>
       )}
 
-      <div className="container mx-auto px-4 space-y-12 md:space-y-16">
+      {/* 중간 배너 */}
+      {middleBanners && middleBanners.length > 0 && (
+        <section className="pb-8 sm:pb-12">
+          <MiddleBanner banners={middleBanners} />
+        </section>
+      )}
+
+      <div className="container mx-auto px-4 space-y-12 md:space-y-16 pb-24">
         {/* 성공사례 섹션 */}
         <section>
           <div className="flex items-center justify-between mb-6">

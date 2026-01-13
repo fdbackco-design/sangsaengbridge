@@ -11,15 +11,22 @@ export async function createCase(formData: FormData) {
   const data = {
     title: formData.get('title') as string,
     slug: formData.get('slug') as string,
-    summary: formData.get('summary') as string | null,
-    content_markdown: formData.get('content_markdown') as string | null,
-    category_id: formData.get('category_id') as string | null,
+    summary: formData.get('summary') as string | null || undefined,
+    content_markdown: formData.get('content_markdown') as string | null || undefined,
+    category_id: formData.get('category_id') as string | null || undefined,
     thumbnail_image_1: formData.get('thumbnail_image_1') as string,
-    thumbnail_image_2: formData.get('thumbnail_image_2') as string | null,
-    detail_image: formData.get('detail_image') as string | null,
+    thumbnail_image_2: (formData.get('thumbnail_image_2') as string) || undefined,
+    detail_image: (formData.get('detail_image') as string) || undefined,
     hashtags: formData.get('hashtags') ? (formData.get('hashtags') as string).split(',').map(t => t.trim()).filter(Boolean) : [],
     is_featured: formData.get('is_featured') === 'true',
   }
+  
+  // 빈 문자열을 undefined로 변환
+  if (data.thumbnail_image_2 === '') data.thumbnail_image_2 = undefined
+  if (data.detail_image === '') data.detail_image = undefined
+  if (data.summary === '') data.summary = undefined
+  if (data.content_markdown === '') data.content_markdown = undefined
+  if (data.category_id === '') data.category_id = undefined
 
   const validated = caseSchema.parse(data)
 
@@ -41,15 +48,22 @@ export async function updateCase(id: string, formData: FormData) {
   const data = {
     title: formData.get('title') as string,
     slug: formData.get('slug') as string,
-    summary: formData.get('summary') as string | null,
-    content_markdown: formData.get('content_markdown') as string | null,
-    category_id: formData.get('category_id') as string | null,
+    summary: formData.get('summary') as string | null || undefined,
+    content_markdown: formData.get('content_markdown') as string | null || undefined,
+    category_id: formData.get('category_id') as string | null || undefined,
     thumbnail_image_1: formData.get('thumbnail_image_1') as string,
-    thumbnail_image_2: formData.get('thumbnail_image_2') as string | null,
-    detail_image: formData.get('detail_image') as string | null,
+    thumbnail_image_2: (formData.get('thumbnail_image_2') as string) || undefined,
+    detail_image: (formData.get('detail_image') as string) || undefined,
     hashtags: formData.get('hashtags') ? (formData.get('hashtags') as string).split(',').map(t => t.trim()).filter(Boolean) : [],
     is_featured: formData.get('is_featured') === 'true',
   }
+  
+  // 빈 문자열을 undefined로 변환
+  if (data.thumbnail_image_2 === '') data.thumbnail_image_2 = undefined
+  if (data.detail_image === '') data.detail_image = undefined
+  if (data.summary === '') data.summary = undefined
+  if (data.content_markdown === '') data.content_markdown = undefined
+  if (data.category_id === '') data.category_id = undefined
 
   const validated = caseSchema.parse(data)
 

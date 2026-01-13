@@ -1,4 +1,4 @@
-import { requireAdmin } from '@/lib/auth/guard'
+import { getCurrentUser } from '@/lib/auth/guard'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
@@ -8,10 +8,26 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { user } = await requireAdmin()
-
+  // 로그인 페이지는 이 layout을 사용하지 않으므로
+  // requireAdmin 대신 getCurrentUser를 사용하여 조건부 렌더링
+  const user = await getCurrentUser()
   const supabase = createClient()
-  const { data: { session } } = await supabase.auth.getSession()
+  
+  // user가 없거나 admin이 아니면 children만 렌더링 (로그인 페이지일 수 있음)
+  if (!user) {
+    return <>{children}</>
+  }
+  
+  // admin role 확인
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single()
+
+  if (!profile || profile.role !== 'admin') {
+    return <>{children}</>
+  }
 
   const handleSignOut = async () => {
     'use server'
@@ -64,6 +80,12 @@ export default async function AdminLayout({
                 className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
               >
                 배너 관리
+              </Link>
+              <Link
+                href="/admin/middle-banners"
+                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
+              >
+                중간 배너 관리
               </Link>
               <Link
                 href="/admin/progress"

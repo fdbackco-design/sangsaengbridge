@@ -1,7 +1,7 @@
 import { createServiceRoleClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/guard'
 import Link from 'next/link'
-import { deletePress } from './actions'
+import DeleteButton from './DeleteButton'
 
 export default async function AdminPressPage() {
   await requireAdmin()
@@ -53,20 +53,7 @@ export default async function AdminPressPage() {
                       >
                         수정
                       </Link>
-                      <form action={deletePress}>
-                        <input type="hidden" name="id" value={item.id} />
-                        <button
-                          type="submit"
-                          className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
-                          onClick={(e) => {
-                            if (!confirm('정말 삭제하시겠습니까?')) {
-                              e.preventDefault()
-                            }
-                          }}
-                        >
-                          삭제
-                        </button>
-                      </form>
+                      <DeleteButton id={item.id} />
                     </div>
                   </td>
                 </tr>

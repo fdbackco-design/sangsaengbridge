@@ -10,11 +10,17 @@ export async function createPress(formData: FormData) {
 
   const data = {
     title: formData.get('title') as string,
-    thumbnail_url: formData.get('thumbnail_url') as string | null,
-    published_date: formData.get('published_date') as string | null,
-    summary: formData.get('summary') as string | null,
-    external_link: formData.get('external_link') as string | null,
+    thumbnail_url: (formData.get('thumbnail_url') as string) || undefined,
+    published_date: (formData.get('published_date') as string) || undefined,
+    summary: (formData.get('summary') as string) || undefined,
+    external_link: (formData.get('external_link') as string) || undefined,
   }
+  
+  // 빈 문자열을 undefined로 변환
+  if (data.thumbnail_url === '') data.thumbnail_url = undefined
+  if (data.published_date === '') data.published_date = undefined
+  if (data.summary === '') data.summary = undefined
+  if (data.external_link === '') data.external_link = undefined
 
   const validated = pressSchema.parse(data)
 
@@ -34,11 +40,17 @@ export async function updatePress(id: string, formData: FormData) {
 
   const data = {
     title: formData.get('title') as string,
-    thumbnail_url: formData.get('thumbnail_url') as string | null,
-    published_date: formData.get('published_date') as string | null,
-    summary: formData.get('summary') as string | null,
-    external_link: formData.get('external_link') as string | null,
+    thumbnail_url: (formData.get('thumbnail_url') as string) || undefined,
+    published_date: (formData.get('published_date') as string) || undefined,
+    summary: (formData.get('summary') as string) || undefined,
+    external_link: (formData.get('external_link') as string) || undefined,
   }
+  
+  // 빈 문자열을 undefined로 변환
+  if (data.thumbnail_url === '') data.thumbnail_url = undefined
+  if (data.published_date === '') data.published_date = undefined
+  if (data.summary === '') data.summary = undefined
+  if (data.external_link === '') data.external_link = undefined
 
   const validated = pressSchema.parse(data)
 
