@@ -78,10 +78,10 @@ export async function deleteCase(formData: FormData) {
   const { error } = await supabase.from('cases').delete().eq('id', id)
 
   if (error) {
-    return { success: false, error: error.message }
+    throw new Error(error.message)
   }
 
+  revalidatePath('/admin/cases')
   revalidatePath('/cases')
   revalidatePath('/')
-  return { success: true }
 }

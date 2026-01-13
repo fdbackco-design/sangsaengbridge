@@ -65,10 +65,9 @@ export async function deleteLocation(formData: FormData) {
   const { error } = await supabase.from('factory_locations').delete().eq('id', id)
 
   if (error) {
-    return { success: false, error: error.message }
+    throw new Error(error.message)
   }
 
   revalidatePath('/admin/locations')
   revalidatePath('/')
-  return { success: true }
 }

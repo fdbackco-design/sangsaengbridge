@@ -67,9 +67,9 @@ export async function deleteProgress(formData: FormData) {
   const { error } = await supabase.from('progress').delete().eq('id', id)
 
   if (error) {
-    return { success: false, error: error.message }
+    throw new Error(error.message)
   }
 
+  revalidatePath('/admin/progress')
   revalidatePath('/')
-  return { success: true }
 }

@@ -65,9 +65,9 @@ export async function deletePress(formData: FormData) {
   const { error } = await supabase.from('press').delete().eq('id', id)
 
   if (error) {
-    return { success: false, error: error.message }
+    throw new Error(error.message)
   }
 
+  revalidatePath('/admin/press')
   revalidatePath('/')
-  return { success: true }
 }

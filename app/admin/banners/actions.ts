@@ -63,9 +63,9 @@ export async function deleteBanner(formData: FormData) {
   const { error } = await supabase.from('banners').delete().eq('id', id)
 
   if (error) {
-    return { success: false, error: error.message }
+    throw new Error(error.message)
   }
 
+  revalidatePath('/admin/banners')
   revalidatePath('/')
-  return { success: true }
 }
