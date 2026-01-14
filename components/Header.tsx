@@ -3,9 +3,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
+import SearchModal from './SearchModal'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-soft">
@@ -28,6 +30,7 @@ export default function Header() {
             {/* 검색 아이콘 */}
             <button
               aria-label="검색"
+              onClick={() => setIsSearchOpen(true)}
               className="p-2 text-gray-600 hover:text-burgundy-700 transition-colors"
             >
               <svg
@@ -106,6 +109,7 @@ export default function Header() {
           </nav>
         )}
       </div>
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   )
 }

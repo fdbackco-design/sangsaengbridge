@@ -4,6 +4,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import BottomCTA from '@/components/BottomCTA'
 import FloatingCall from '@/components/FloatingCall'
+import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,12 +22,15 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <Header />
-        <main className="min-h-screen pb-24">
-          {children}
-        </main>
-        <BottomCTA />
-        <FloatingCall />
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-1 pb-24">
+            {children}
+          </main>
+          <Footer />
+          <BottomCTA />
+          <FloatingCall />
+        </div>
       </body>
     </html>
   )
