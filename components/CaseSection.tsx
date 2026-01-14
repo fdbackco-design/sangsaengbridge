@@ -15,6 +15,7 @@ interface Case {
   title: string
   slug: string
   thumbnail_image_1: string
+  is_featured?: boolean
   category?: {
     name: string
     slug: string

@@ -8,6 +8,7 @@ interface Case {
   title: string
   slug: string
   thumbnail_image_1: string
+  is_featured?: boolean
   category?: {
     name: string
     slug: string
@@ -25,8 +26,15 @@ export default function FilteredCaseGrid({ cases, selectedCategory }: FilteredCa
     ? cases.filter(caseItem => caseItem.category?.slug === selectedCategory)
     : cases
 
+  // 추천 항목을 먼저 정렬 (추천 항목이 상단에 오도록)
+  const sortedCases = [...filteredCases].sort((a, b) => {
+    const aFeatured = a.is_featured ? 1 : 0
+    const bFeatured = b.is_featured ? 1 : 0
+    return bFeatured - aFeatured // 추천 항목이 먼저 오도록
+  })
+
   // 최대 4개만 표시
-  const displayCases = filteredCases.slice(0, 4)
+  const displayCases = sortedCases.slice(0, 4)
 
   if (displayCases.length === 0) {
     return (

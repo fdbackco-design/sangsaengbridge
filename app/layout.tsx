@@ -23,13 +23,13 @@ export default function RootLayout({
     <html lang="ko">
       <body className={inter.className}>
         <div className="flex flex-col min-h-screen">
-          <Header />
+        <Header />
           <main className="flex-1 pb-24">
-            {children}
-          </main>
+          {children}
+        </main>
           <Footer />
-          <BottomCTA />
-          <FloatingCall />
+        <BottomCTA />
+        <FloatingCall />
         </div>
       </body>
     </html>
