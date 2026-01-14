@@ -103,19 +103,6 @@ export default async function HomePage() {
         {/* 상생 브릿지 소개 */}
         {about && <AboutSection about={about} />}
 
-        {/* 진행상황 섹션 */}
-        {progress && progress.length > 0 && (
-          <section>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 text-center">
-              진행 상황
-            </h2>
-            <p className="text-gray-600 mb-6 text-center text-sm md:text-base">
-              진행 중인 다른 제품을 확인해 보세요.
-            </p>
-            <ProgressCarousel items={progress} />
-          </section>
-        )}
-
         {/* 구글 맵 섹션 */}
         {factoryLocations && factoryLocations.length > 0 && (
           <section>
@@ -127,6 +114,19 @@ export default async function HomePage() {
         {press && press.length > 0 && (
           <section>
             <PressList items={press} />
+          </section>
+        )}
+
+        {/* 진행상황 섹션 */}
+        {progress && progress.length > 0 && (
+          <section>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 text-center">
+              진행 상황
+            </h2>
+            <p className="text-gray-600 mb-6 text-center text-sm md:text-base">
+              진행 중인 다른 제품을 확인해 보세요.
+            </p>
+            <ProgressCarousel items={progress} />
           </section>
         )}
 

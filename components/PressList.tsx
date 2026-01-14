@@ -32,6 +32,7 @@ export default function PressList({ items }: PressListProps) {
               alt={item.title}
               fill
               className="object-cover"
+              sizes={isLarge ? "(max-width: 768px) 100vw, 672px" : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"}
             />
           </div>
         )}
