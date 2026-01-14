@@ -2,6 +2,7 @@ import { getCurrentUser } from '@/lib/auth/guard'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import AdminNav from '@/components/AdminNav'
 
 export default async function AdminLayout({
   children,
@@ -62,62 +63,7 @@ export default async function AdminLayout({
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col md:flex-row gap-6">
           <aside className="w-full md:w-64 bg-white rounded-card shadow-soft p-4 h-fit">
-            <nav className="space-y-2">
-              <Link
-                href="/admin"
-                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
-              >
-                대시보드
-              </Link>
-              <Link
-                href="/admin/cases"
-                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
-              >
-                성공사례 관리
-              </Link>
-              <Link
-                href="/admin/banners"
-                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
-              >
-                배너 관리
-              </Link>
-              <Link
-                href="/admin/middle-banners"
-                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
-              >
-                중간 배너 관리
-              </Link>
-              <Link
-                href="/admin/progress"
-                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
-              >
-                진행상황 관리
-              </Link>
-              <Link
-                href="/admin/press"
-                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
-              >
-                언론보도 관리
-              </Link>
-              <Link
-                href="/admin/about"
-                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
-              >
-                소개 편집
-              </Link>
-              <Link
-                href="/admin/guide"
-                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
-              >
-                이용안내 편집
-              </Link>
-              <Link
-                href="/admin/locations"
-                className="block px-4 py-2 text-gray-700 hover:bg-cream-50 rounded-button transition-colors"
-              >
-                공장 위치 관리
-              </Link>
-            </nav>
+            <AdminNav />
           </aside>
 
           <main className="flex-1">{children}</main>
