@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import BannerSlider from '@/components/BannerSlider'
 import MiddleBanner from '@/components/MiddleBanner'
 import CaseSection from '@/components/CaseSection'
+import AboutSection from '@/components/AboutSection'
 import ProgressCarousel from '@/components/ProgressCarousel'
 import GuideSteps from '@/components/GuideSteps'
 import PressList from '@/components/PressList'
@@ -90,71 +91,10 @@ export default async function HomePage() {
         {/* 성공사례 섹션 (카테고리 필터 포함) */}
         {categories && cases && (
           <CaseSection categories={categories} cases={cases} />
-        )}
+                  )}
 
         {/* 상생 브릿지 소개 */}
-        {about && (
-          <section className="bg-cream-50 rounded-card p-6 md:p-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              {about.section_title || '상생 브릿지는?'}
-            </h2>
-            {about.section_description && (
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                {about.section_description}
-              </p>
-            )}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-              {about.strength_1_title && (
-                <div className="bg-white rounded-card shadow-soft p-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    {about.strength_1_title}
-                  </h3>
-                  {about.strength_1_description && (
-                    <p className="text-sm text-gray-600">
-                      {about.strength_1_description}
-                    </p>
-                  )}
-                </div>
-              )}
-              {about.strength_2_title && (
-                <div className="bg-white rounded-card shadow-soft p-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    {about.strength_2_title}
-                  </h3>
-                  {about.strength_2_description && (
-                    <p className="text-sm text-gray-600">
-                      {about.strength_2_description}
-                    </p>
-                  )}
-                </div>
-              )}
-              {about.strength_3_title && (
-                <div className="bg-white rounded-card shadow-soft p-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    {about.strength_3_title}
-                  </h3>
-                  {about.strength_3_description && (
-                    <p className="text-sm text-gray-600">
-                      {about.strength_3_description}
-                    </p>
-                  )}
-                </div>
-              )}
-              {about.strength_4_title && (
-                <div className="bg-white rounded-card shadow-soft p-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    {about.strength_4_title}
-                  </h3>
-                  {about.strength_4_description && (
-                    <p className="text-sm text-gray-600">
-                      {about.strength_4_description}
-                    </p>
-                  )}
-                </div>
-              )}
-            </div>
-          </section>
-        )}
+        {about && <AboutSection about={about} />}
 
         {/* 진행상황 섹션 */}
         {progress && progress.length > 0 && (

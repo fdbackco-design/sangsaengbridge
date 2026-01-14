@@ -56,15 +56,19 @@ export const pressSchema = z.object({
 
 export const aboutSchema = z.object({
   section_title: z.string().min(1),
-  section_description: z.string().optional(),
-  strength_1_title: z.string().optional(),
-  strength_1_description: z.string().optional(),
-  strength_2_title: z.string().optional(),
-  strength_2_description: z.string().optional(),
-  strength_3_title: z.string().optional(),
-  strength_3_description: z.string().optional(),
-  strength_4_title: z.string().optional(),
-  strength_4_description: z.string().optional(),
+  section_description: z.string().optional().or(z.literal('')),
+  strength_1_title: z.string().optional().or(z.literal('')),
+  strength_1_description: z.string().optional().or(z.literal('')),
+  strength_1_image_url: z.string().url().optional().or(z.literal('')),
+  strength_2_title: z.string().optional().or(z.literal('')),
+  strength_2_description: z.string().optional().or(z.literal('')),
+  strength_2_image_url: z.string().url().optional().or(z.literal('')),
+  strength_3_title: z.string().optional().or(z.literal('')),
+  strength_3_description: z.string().optional().or(z.literal('')),
+  strength_3_image_url: z.string().url().optional().or(z.literal('')),
+  strength_4_title: z.string().optional().or(z.literal('')),
+  strength_4_description: z.string().optional().or(z.literal('')),
+  strength_4_image_url: z.string().url().optional().or(z.literal('')),
 })
 
 export const guideStepSchema = z.object({

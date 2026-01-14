@@ -98,12 +98,16 @@ CREATE TABLE IF NOT EXISTS about (
   section_description TEXT,
   strength_1_title TEXT,
   strength_1_description TEXT,
+  strength_1_image_url TEXT,
   strength_2_title TEXT,
   strength_2_description TEXT,
+  strength_2_image_url TEXT,
   strength_3_title TEXT,
   strength_3_description TEXT,
+  strength_3_image_url TEXT,
   strength_4_title TEXT,
   strength_4_description TEXT,
+  strength_4_image_url TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
