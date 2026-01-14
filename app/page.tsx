@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import BannerSlider from '@/components/BannerSlider'
 import MiddleBanner from '@/components/MiddleBanner'
-import CaseGrid from '@/components/CaseGrid'
+import CaseSection from '@/components/CaseSection'
 import ProgressCarousel from '@/components/ProgressCarousel'
 import GuideSteps from '@/components/GuideSteps'
 import PressList from '@/components/PressList'
@@ -24,7 +24,7 @@ export default async function HomePage() {
     .eq('is_active', true)
     .order('sort_order', { ascending: true })
 
-  // 성공사례 조회 (최신 6개)
+  // 성공사례 조회 (모든 항목)
   const { data: cases } = await supabase
     .from('cases')
     .select(`
@@ -32,7 +32,12 @@ export default async function HomePage() {
       category:case_categories(*)
     `)
     .order('created_at', { ascending: false })
-    .limit(6)
+
+  // 카테고리 조회
+  const { data: categories } = await supabase
+    .from('case_categories')
+    .select('*')
+    .order('name', { ascending: true })
 
   // 진행상황 조회
   const { data: progress } = await supabase
@@ -82,19 +87,10 @@ export default async function HomePage() {
       )}
 
       <div className="container mx-auto px-4 space-y-12 md:space-y-16 pb-24">
-        {/* 성공사례 섹션 */}
-        <section>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">성공사례</h2>
-            <a
-              href="/cases"
-              className="text-burgundy-700 hover:text-burgundy-800 font-medium text-sm"
-            >
-              전체보기 →
-            </a>
-          </div>
-          <CaseGrid cases={cases || []} />
-        </section>
+        {/* 성공사례 섹션 (카테고리 필터 포함) */}
+        {categories && cases && (
+          <CaseSection categories={categories} cases={cases} />
+        )}
 
         {/* 상생 브릿지 소개 */}
         {about && (
