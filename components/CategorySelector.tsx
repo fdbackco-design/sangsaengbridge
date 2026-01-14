@@ -63,6 +63,7 @@ export default function CategorySelector({ categories, selectedCategory, onSelec
                     fill
                     className="object-contain"
                     sizes="(max-width: 768px) 64px, 80px"
+                    unoptimized
                   />
                 )}
               </div>

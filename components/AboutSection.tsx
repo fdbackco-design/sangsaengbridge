@@ -95,24 +95,41 @@ export default function AboutSection({ about }: AboutSectionProps) {
     { title: about.strength_4_title, description: about.strength_4_description, image_url: about.strength_4_image_url },
   ].filter(s => s.title)
 
+  // 모바일에서는 줄바꿈(<br />)으로, md 이상에서는 공백으로 이어붙이기
+  // DB에 \n 또는 유니코드 줄바꿈(U+2028)이 들어와도 처리
+  const sectionDescriptionLines = (about.section_description || '')
+    .split(/\r?\n|\u2028/g)
+    .map((s) => s.trim())
+    .filter(Boolean)
+
   return (
-    <section className="bg-cream-50 rounded-card p-6 md:p-8 lg:p-12">
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-6">
+    <section className="bg-cream-50 rounded-card py-6 px-4 md:p-8 lg:p-12">
+      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-6 text-center">
         {about.section_title || '상생 브릿지는?'}
       </h2>
-      {about.section_description && (
-        <p className="text-gray-700 mb-8 md:mb-12 leading-relaxed text-base md:text-lg">
-          {about.section_description}
+      {sectionDescriptionLines.length > 0 && (
+        <p className="text-gray-700 mb-8 md:mb-12 leading-relaxed text-base md:text-lg text-center">
+          {sectionDescriptionLines.map((line, i) => (
+            <span key={i}>
+              {line}
+              {i < sectionDescriptionLines.length - 1 && (
+                <>
+                  <br className="md:hidden" />
+                  <span className="hidden md:inline"> </span>
+                </>
+              )}
+            </span>
+          ))}
         </p>
       )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 md:gap-6">
         {strengths.map((strength, index) => (
           <div
             key={index}
             className="bg-white rounded-card shadow-soft overflow-hidden hover:shadow-card transition-shadow"
           >
             {/* 이미지 영역 */}
-            <div className="relative w-full h-40 md:h-auto md:aspect-[16/9] md:max-h-[360px] bg-cream-200 overflow-hidden">
+            <div className="relative w-full h-20 md:h-auto md:aspect-[16/9] md:max-h-[360px] bg-cream-200 overflow-hidden">
               {strength.image_url ? (
                 <Image
                   src={strength.image_url}
