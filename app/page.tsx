@@ -41,11 +41,18 @@ export default async function HomePage() {
     .order('name', { ascending: true })
 
   // 진행상황 조회
-  const { data: progress } = await supabase
+  const { data: progressRaw } = await supabase
     .from('progress')
     .select('*')
-    .order('created_at', { ascending: false })
     .limit(10)
+  
+  // stage_date 기준 내림차순 정렬 (null은 마지막)
+  const progress = progressRaw?.sort((a, b) => {
+    if (!a.stage_date && !b.stage_date) return 0
+    if (!a.stage_date) return 1
+    if (!b.stage_date) return -1
+    return new Date(b.stage_date).getTime() - new Date(a.stage_date).getTime()
+  })
 
   // 소개(About) 조회
   const { data: about } = await supabase
@@ -99,9 +106,12 @@ export default async function HomePage() {
         {/* 진행상황 섹션 */}
         {progress && progress.length > 0 && (
           <section>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 text-center">
               진행 상황
             </h2>
+            <p className="text-gray-600 mb-6 text-center text-sm md:text-base">
+              진행 중인 다른 제품을 확인해 보세요.
+            </p>
             <ProgressCarousel items={progress} />
           </section>
         )}

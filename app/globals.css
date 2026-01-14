@@ -69,3 +69,38 @@ a {
     max-width: 1280px;
   }
 }
+
+/* Swiper 스타일 - 버건디 색상 */
+.progress-swiper .swiper-button-next,
+.progress-swiper .swiper-button-prev {
+  color: #6B1D2A;
+}
+
+.progress-swiper .swiper-button-next:after,
+.progress-swiper .swiper-button-prev:after {
+  color: #6B1D2A;
+}
+
+.progress-swiper .swiper-pagination-bullet {
+  background: #6B1D2A;
+  opacity: 0.3;
+}
+
+.progress-swiper .swiper-pagination-bullet-active {
+  background: #6B1D2A;
+  opacity: 1;
+}
+
+/* 진행률 퍼센트 애니메이션 */
+@keyframes bounce-gentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 1.5s ease-in-out infinite;
+}

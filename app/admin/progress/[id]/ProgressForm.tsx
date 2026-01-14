@@ -26,11 +26,24 @@ export default function ProgressForm({ progress }: ProgressFormProps) {
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState('')
 
+  // 단계에 따른 진행률 매핑
+  const stageProgressMap: Record<string, number> = {
+    상담: 20,
+    샘플: 40,
+    발주: 60,
+    생산: 80,
+    배송: 100,
+  }
+
+  const getProgressByStage = (stage: string): number => {
+    return stageProgressMap[stage] || 0
+  }
+
   const [formData, setFormData] = useState({
     title: progress?.title || '',
     image_url: progress?.image_url || '',
     moq: progress?.moq || '',
-    progress_percent: progress?.progress_percent || 0,
+    progress_percent: progress?.progress_percent || getProgressByStage(progress?.stage || '상담'),
     stage: progress?.stage || '상담',
     stage_date: progress?.stage_date ? progress.stage_date.split('T')[0] : '',
   })
@@ -139,31 +152,36 @@ export default function ProgressForm({ progress }: ProgressFormProps) {
       </div>
 
       <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">단계 <span className="text-red-500">*</span></label>
+        <select
+          value={formData.stage}
+          onChange={(e) => {
+            const newStage = e.target.value
+            const newProgress = getProgressByStage(newStage)
+            setFormData({ ...formData, stage: newStage, progress_percent: newProgress })
+          }}
+          required
+          className="w-full px-4 py-2 border border-gray-300 rounded-button focus:ring-2 focus:ring-burgundy-500 focus:border-transparent"
+        >
+          <option value="상담">상담 (20%)</option>
+          <option value="샘플">샘플 (40%)</option>
+          <option value="발주">발주 (60%)</option>
+          <option value="생산">생산 (80%)</option>
+          <option value="배송">배송 (100%)</option>
+        </select>
+      </div>
+
+      <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">진행률 (%)</label>
         <input
           type="number"
           min="0"
           max="100"
           value={formData.progress_percent}
-          onChange={(e) => setFormData({ ...formData, progress_percent: parseInt(e.target.value) || 0 })}
-          className="w-full px-4 py-2 border border-gray-300 rounded-button focus:ring-2 focus:ring-burgundy-500 focus:border-transparent"
+          readOnly
+          className="w-full px-4 py-2 border border-gray-300 rounded-button bg-gray-50 text-gray-600 cursor-not-allowed"
         />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">단계 <span className="text-red-500">*</span></label>
-        <select
-          value={formData.stage}
-          onChange={(e) => setFormData({ ...formData, stage: e.target.value })}
-          required
-          className="w-full px-4 py-2 border border-gray-300 rounded-button focus:ring-2 focus:ring-burgundy-500 focus:border-transparent"
-        >
-          <option value="상담">상담</option>
-          <option value="샘플">샘플</option>
-          <option value="발주">발주</option>
-          <option value="생산">생산</option>
-          <option value="배송">배송</option>
-        </select>
+        <p className="text-xs text-gray-500 mt-1">단계에 따라 자동으로 설정됩니다.</p>
       </div>
 
       <div>

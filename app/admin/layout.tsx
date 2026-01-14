@@ -41,15 +41,15 @@ export default async function AdminLayout({
       <nav className="bg-white shadow-soft border-b border-gray-200">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-            <Link href="/admin" className="text-xl font-bold text-burgundy-700">
+            <Link href="/admin" className="text-base sm:text-xl font-bold text-burgundy-700">
               관리자 대시보드
             </Link>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600">{user?.email}</span>
+            <div className="flex items-center gap-2 sm:gap-4">
+              <span className="hidden sm:inline text-xs sm:text-sm text-gray-600">{user?.email}</span>
               <form action={handleSignOut}>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-sm text-gray-700 hover:text-burgundy-700"
+                  className="px-2 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm text-gray-700 hover:text-burgundy-700"
                 >
                   로그아웃
                 </button>
