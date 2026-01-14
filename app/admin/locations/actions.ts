@@ -12,7 +12,7 @@ export async function createLocation(formData: FormData) {
     title: formData.get('title') as string,
     latitude: parseFloat(formData.get('latitude') as string),
     longitude: parseFloat(formData.get('longitude') as string),
-    address: formData.get('address') as string | null,
+    address: (formData.get('address') as string | null) || undefined,
   }
 
   const validated = factoryLocationSchema.parse(data)
@@ -36,7 +36,7 @@ export async function updateLocation(id: string, formData: FormData) {
     title: formData.get('title') as string,
     latitude: parseFloat(formData.get('latitude') as string),
     longitude: parseFloat(formData.get('longitude') as string),
-    address: formData.get('address') as string | null,
+    address: (formData.get('address') as string | null) || undefined,
   }
 
   const validated = factoryLocationSchema.parse(data)

@@ -1,7 +1,7 @@
 import { requireAdmin } from '@/lib/auth/guard'
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { deleteLocation } from './actions'
+import DeleteButton from './DeleteButton'
 
 export default async function LocationsPage() {
   await requireAdmin()
@@ -51,20 +51,7 @@ export default async function LocationsPage() {
                       >
                         수정
                       </Link>
-                      <form action={deleteLocation} className="inline">
-                        <input type="hidden" name="id" value={location.id} />
-                        <button
-                          type="submit"
-                          onClick={(e) => {
-                            if (!confirm('정말 삭제하시겠습니까?')) {
-                              e.preventDefault()
-                            }
-                          }}
-                          className="px-3 py-1 text-sm text-red-600 hover:bg-red-50 rounded-button transition-colors"
-                        >
-                          삭제
-                        </button>
-                      </form>
+                      <DeleteButton id={location.id} />
                     </div>
                   </td>
                 </tr>

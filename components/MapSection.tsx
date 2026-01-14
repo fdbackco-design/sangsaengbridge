@@ -53,7 +53,32 @@ export default function MapSection({ locations }: MapSectionProps) {
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             center={center}
-            zoom={locations.length > 0 ? 7 : 6}
+            // 기본 zoom은 넓게(축소) 잡고, onLoad에서 모든 마커가 보이도록 fitBounds로 조정
+            zoom={locations.length > 0 ? 5 : 4}
+            onLoad={(map) => {
+              if (locations.length === 0) return
+
+              const bounds = new google.maps.LatLngBounds()
+              locations.forEach((loc) => {
+                bounds.extend({
+                  lat: Number(loc.latitude),
+                  lng: Number(loc.longitude),
+                })
+              })
+
+              map.fitBounds(bounds, 40) // padding(px)
+
+              // 너무 확대되는 경우를 방지 (도시 단위 이상으로는 확대하지 않음)
+              const listener = google.maps.event.addListenerOnce(map, 'idle', () => {
+                const currentZoom = map.getZoom()
+                if (typeof currentZoom === 'number' && currentZoom > 6) {
+                  map.setZoom(6)
+                }
+              })
+
+              // listener는 once라 자동 해제되지만, 타입상 변수 유지
+              void listener
+            }}
           >
             {locations.map((location) => (
               <Marker
