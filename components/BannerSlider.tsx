@@ -28,7 +28,7 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
 
   return (
     <div className="w-full px-4 sm:px-6 md:px-8">
-      <div className="w-full max-w-7xl mx-auto">
+      <div className="w-full max-w-full md:max-w-[800px] mx-auto">
         <div className="relative w-full aspect-[365/118] rounded-card shadow-soft overflow-hidden bg-cream-50">
       <Swiper
         modules={[Autoplay, Pagination]}

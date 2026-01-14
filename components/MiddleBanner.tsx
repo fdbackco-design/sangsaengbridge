@@ -24,7 +24,7 @@ export default function MiddleBanner({ banners }: MiddleBannerProps) {
 
   return (
     <div className="w-full px-0 md:px-4 lg:px-6 xl:px-8">
-      <div className="w-full max-w-7xl mx-auto">
+      <div className="w-full max-w-full md:max-w-[800px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
           {activeBanners.map((banner) => (
             <div key={banner.id} className="relative w-full aspect-[383/214] rounded-none md:rounded-card shadow-soft overflow-hidden bg-cream-50">
