@@ -74,6 +74,14 @@ a {
 .progress-swiper .swiper-button-next,
 .progress-swiper .swiper-button-prev {
   color: #6B1D2A;
+  display: none; /* 모바일에서 숨김 */
+}
+
+@media (min-width: 768px) {
+  .progress-swiper .swiper-button-next,
+  .progress-swiper .swiper-button-prev {
+    display: flex; /* 웹에서만 표시 */
+  }
 }
 
 .progress-swiper .swiper-button-next:after,
