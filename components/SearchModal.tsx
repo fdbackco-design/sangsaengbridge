@@ -106,7 +106,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="성공 사례 검색..."
+              placeholder="청소기, 캐리어 등..."
               className="flex-1 outline-none text-base"
               autoFocus
             />

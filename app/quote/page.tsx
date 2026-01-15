@@ -74,12 +74,6 @@ export default function QuotePage() {
     <div className="container mx-auto px-4 py-8 max-w-2xl">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">무료 견적 신청</h1>
 
-      {submitStatus === 'success' && (
-        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-card text-green-800">
-          견적 신청이 완료되었습니다. 빠른 시일 내에 연락드리겠습니다.
-        </div>
-      )}
-
       {submitStatus === 'error' && (
         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-card text-red-800">
           {errorMessage}
@@ -211,6 +205,14 @@ export default function QuotePage() {
             <p className="mt-1 text-sm text-red-600">{errors.privacy_agreed.message}</p>
           )}
         </div>
+
+        {/* 성공 메시지 */}
+        {submitStatus === 'success' && (
+          <div className="p-6 md:p-4 bg-green-100 md:bg-green-50 border-2 md:border border-green-500 md:border-green-200 rounded-card text-green-900 md:text-green-800 text-center text-lg md:text-base font-semibold md:font-normal">
+            견적 신청이 완료되었습니다.<br />
+            빠른 시일 내에 연락드리겠습니다.
+          </div>
+        )}
 
         {/* 제출 버튼 */}
         <button
