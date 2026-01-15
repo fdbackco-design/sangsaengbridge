@@ -39,13 +39,13 @@ export default async function AdminProgressPage() {
             {progress && progress.length > 0 ? (
               progress.map((item) => (
                 <tr key={item.id}>
-                  <td className="px-4 py-3 font-medium">{item.title}</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">{item.stage}</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">{item.progress_percent}%</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">
+                  <td className="px-4 py-3 font-medium whitespace-nowrap">{item.title}</td>
+                  <td className="px-4 py-3 text-sm text-gray-600 whitespace-nowrap">{item.stage}</td>
+                  <td className="px-4 py-3 text-sm text-gray-600 whitespace-nowrap">{item.progress_percent}%</td>
+                  <td className="px-4 py-3 text-sm text-gray-600 whitespace-nowrap">
                     {new Date(item.created_at).toLocaleDateString('ko-KR')}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <div className="flex gap-2">
                       <Link
                         href={`/admin/progress/${item.id}`}

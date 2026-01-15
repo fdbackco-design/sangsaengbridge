@@ -39,13 +39,13 @@ export default async function AdminPressPage() {
               press.map((item) => (
                 <tr key={item.id}>
                   <td className="px-4 py-3 font-medium">{item.title}</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">
+                  <td className="px-4 py-3 text-sm text-gray-600 whitespace-nowrap">
                     {item.published_date ? new Date(item.published_date).toLocaleDateString('ko-KR') : '-'}
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-600">
+                  <td className="px-4 py-3 text-sm text-gray-600 whitespace-nowrap">
                     {new Date(item.created_at).toLocaleDateString('ko-KR')}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <div className="flex gap-2">
                       <Link
                         href={`/admin/press/${item.id}`}
