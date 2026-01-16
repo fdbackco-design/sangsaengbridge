@@ -8,6 +8,7 @@ import InterviewCarousel from '@/components/InterviewCarousel'
 import GuideSteps from '@/components/GuideSteps'
 import PressList from '@/components/PressList'
 import MapSection from '@/components/MapSection'
+import AnimatedSection from '@/components/AnimatedSection'
 
 export default async function HomePage() {
   const supabase = createClient()
@@ -105,29 +106,35 @@ export default async function HomePage() {
       <div className="container mx-auto px-4 space-y-12 md:space-y-16 pb-24">
         {/* 성공사례 섹션 (카테고리 필터 포함) */}
         {categories && cases && (
-          <CaseSection categories={categories} cases={cases} />
-                  )}
+          <AnimatedSection>
+            <CaseSection categories={categories} cases={cases} />
+          </AnimatedSection>
+        )}
 
         {/* 상생 브릿지 소개 */}
-        {about && <AboutSection about={about} />}
+        {about && (
+          <AnimatedSection>
+            <AboutSection about={about} />
+          </AnimatedSection>
+        )}
 
         {/* 구글 맵 섹션 */}
         {factoryLocations && factoryLocations.length > 0 && (
-          <section>
+          <AnimatedSection>
             <MapSection locations={factoryLocations} />
-          </section>
+          </AnimatedSection>
         )}
 
         {/* 언론보도 섹션 */}
         {press && press.length > 0 && (
-          <section>
+          <AnimatedSection>
             <PressList items={press} />
-          </section>
+          </AnimatedSection>
         )}
 
         {/* 진행상황 섹션 */}
         {progress && progress.length > 0 && (
-          <section>
+          <AnimatedSection>
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 text-center">
               진행 상황
             </h2>
@@ -135,24 +142,24 @@ export default async function HomePage() {
               진행 중인 다른 제품을 확인해 보세요.
             </p>
             <ProgressCarousel items={progress} />
-          </section>
+          </AnimatedSection>
         )}
 
         {/* 인터뷰 섹션 */}
         {interviews && interviews.length > 0 && (
-          <section>
+          <AnimatedSection>
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 text-center">
               인터뷰
             </h2>
             <InterviewCarousel items={interviews} />
-          </section>
+          </AnimatedSection>
         )}
 
         {/* 이용안내 섹션 */}
         {guideSteps && guideSteps.length > 0 && (
-          <section>
+          <AnimatedSection>
             <GuideSteps steps={guideSteps} />
-          </section>
+          </AnimatedSection>
         )}
       </div>
     </div>
