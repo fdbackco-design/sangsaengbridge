@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import CaseGrid from '@/components/CaseGrid'
+import CaseDetailImage from '@/components/CaseDetailImage'
+import CaseThumbnailSlider from '@/components/CaseThumbnailSlider'
 
 export async function generateMetadata({
   params,
@@ -71,16 +73,12 @@ export default async function CaseDetailPage({
   return (
     <div className="container mx-auto px-4 py-8">
       <article className="max-w-4xl mx-auto">
-        {/* 썸네일 이미지 */}
-        <div className="relative w-full h-64 md:h-96 mb-6 rounded-card overflow-hidden">
-          <Image
-            src={caseItem.thumbnail_image_1}
-            alt={caseItem.title}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
+        {/* 썸네일 이미지 슬라이드 */}
+        <CaseThumbnailSlider
+          thumbnail1={caseItem.thumbnail_image_1}
+          thumbnail2={caseItem.thumbnail_image_2}
+          title={caseItem.title}
+        />
 
         {/* 제목 및 메타 정보 */}
         <header className="mb-6">
@@ -111,14 +109,7 @@ export default async function CaseDetailPage({
 
         {/* 상세 이미지 */}
         {caseItem.detail_image && (
-          <div className="relative w-full h-64 md:h-96 mb-8 rounded-card overflow-hidden">
-            <Image
-              src={caseItem.detail_image}
-              alt={caseItem.title}
-              fill
-              className="object-cover"
-            />
-          </div>
+          <CaseDetailImage src={caseItem.detail_image} alt={caseItem.title} />
         )}
 
         {/* 본문 (Markdown) */}
@@ -127,18 +118,6 @@ export default async function CaseDetailPage({
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {caseItem.content_markdown}
             </ReactMarkdown>
-          </div>
-        )}
-
-        {/* 썸네일 이미지 2 */}
-        {caseItem.thumbnail_image_2 && (
-          <div className="relative w-full h-64 md:h-96 mb-8 rounded-card overflow-hidden">
-            <Image
-              src={caseItem.thumbnail_image_2}
-              alt={caseItem.title}
-              fill
-              className="object-cover"
-            />
           </div>
         )}
       </article>

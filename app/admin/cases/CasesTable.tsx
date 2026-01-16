@@ -80,6 +80,7 @@ export default function CasesTable({ cases }: CasesTableProps) {
                         alt={caseItem.title}
                         fill
                         className="object-cover rounded"
+                        sizes="64px"
                       />
                     </div>
                   </td>

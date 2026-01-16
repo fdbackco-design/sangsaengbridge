@@ -170,7 +170,8 @@ function koreanToSlug(text: string): string {
     .map((char) => {
       // 한글인 경우 변환
       if (/[가-힣]/.test(char)) {
-        return koreanMap[char] || char
+        // 맵에 있으면 변환, 없으면 제거 (한글이 그대로 남지 않도록)
+        return koreanMap[char] || ''
       }
       // 영어나 숫자는 그대로
       if (/[a-zA-Z0-9]/.test(char)) {
