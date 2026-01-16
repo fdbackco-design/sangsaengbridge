@@ -20,7 +20,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg md:text-xl font-bold mb-4">사업장 위치</h3>
             <p className="text-sm md:text-base">
-              인천광역시 연수구 송도과학로 80, 141호
+              인천광역시 연수구 송도동 172-1 송도테크노파크IT센터, S동 3003-3호
             </p>
           </div>
         </div>
