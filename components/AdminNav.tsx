@@ -10,6 +10,7 @@ const navItems = [
   { href: '/admin/middle-banners', label: '중간 배너 관리' },
   { href: '/admin/progress', label: '진행상황 관리' },
   { href: '/admin/press', label: '언론보도 관리' },
+  { href: '/admin/interviews', label: '인터뷰 관리' },
   { href: '/admin/about', label: '소개 편집' },
   { href: '/admin/guide', label: '이용안내 편집' },
   { href: '/admin/locations', label: '공장 위치 관리' },

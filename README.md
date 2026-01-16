@@ -63,6 +63,7 @@ Supabase SQL 파일: `supabase-schema.sql`
    - `cases`
    - `progress`
    - `press`
+   - `interviews`
    - `uploads`
 
 ### 2. 환경변수 설정
@@ -163,7 +164,7 @@ npm start
 
 ### Supabase
 - [ ] SQL 스키마 실행 완료
-- [ ] Storage 버킷 생성 (banners, cases, progress, press, uploads)
+- [ ] Storage 버킷 생성 (banners, cases, progress, press, interviews, uploads)
 - [ ] RLS 정책 활성화 확인
 - [ ] 관리자 계정 생성 및 role 설정
 

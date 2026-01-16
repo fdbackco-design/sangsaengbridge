@@ -83,3 +83,14 @@ export const factoryLocationSchema = z.object({
   longitude: z.number().min(-180).max(180),
   address: z.string().optional(),
 })
+
+export const interviewSchema = z.object({
+  title: z.string().min(1, '제목을 입력해주세요'),
+  slug: z.string().min(1, '슬러그를 입력해주세요'),
+  image_url: z.string().url().min(1, '이미지를 업로드해주세요'),
+  summary: z.string().optional().or(z.literal('')),
+  content_markdown: z.string().optional().or(z.literal('')),
+  closing_text: z.union([z.string(), z.literal(''), z.null()]).optional(),
+  sort_order: z.number().int().default(0),
+  is_active: z.boolean().default(true),
+})

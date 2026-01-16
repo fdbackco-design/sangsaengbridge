@@ -128,6 +128,21 @@ CREATE TABLE IF NOT EXISTS guide_steps (
   UNIQUE(step_number)
 );
 
+-- 9. 인터뷰 테이블
+CREATE TABLE IF NOT EXISTS interviews (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  slug TEXT NOT NULL UNIQUE,
+  image_url TEXT NOT NULL,
+  summary TEXT,
+  content_markdown TEXT,
+  closing_text TEXT,
+  sort_order INTEGER DEFAULT 0,
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- 기본 스텝 데이터 삽입
 INSERT INTO guide_steps (step_number, title, description) VALUES
   (1, '견적 신청', '원하시는 제품의 견적을 요청해주세요.'),
@@ -220,6 +235,7 @@ ALTER TABLE press ENABLE ROW LEVEL SECURITY;
 ALTER TABLE about ENABLE ROW LEVEL SECURITY;
 ALTER TABLE guide_steps ENABLE ROW LEVEL SECURITY;
 ALTER TABLE factory_locations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE interviews ENABLE ROW LEVEL SECURITY;
 ALTER TABLE quotes ENABLE ROW LEVEL SECURITY;
 
 -- 1. Profiles 정책
@@ -420,7 +436,21 @@ CREATE POLICY "Only admins can manage factory locations"
     )
   );
 
--- 10. Quotes 정책
+-- 10. Interviews 정책
+CREATE POLICY "Interviews are viewable by everyone"
+  ON interviews FOR SELECT
+  USING (is_active = true);
+
+CREATE POLICY "Only admins can manage interviews"
+  ON interviews FOR ALL
+  USING (
+    EXISTS (
+      SELECT 1 FROM profiles
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+-- 11. Quotes 정책
 CREATE POLICY "Anyone can insert quotes"
   ON quotes FOR INSERT
   WITH CHECK (true);

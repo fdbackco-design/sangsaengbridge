@@ -4,6 +4,7 @@ import MiddleBanner from '@/components/MiddleBanner'
 import CaseSection from '@/components/CaseSection'
 import AboutSection from '@/components/AboutSection'
 import ProgressCarousel from '@/components/ProgressCarousel'
+import InterviewCarousel from '@/components/InterviewCarousel'
 import GuideSteps from '@/components/GuideSteps'
 import PressList from '@/components/PressList'
 import MapSection from '@/components/MapSection'
@@ -78,6 +79,13 @@ export default async function HomePage() {
     .from('factory_locations')
     .select('*')
 
+  // 인터뷰 조회
+  const { data: interviews } = await supabase
+    .from('interviews')
+    .select('*')
+    .eq('is_active', true)
+    .order('sort_order', { ascending: true })
+
   return (
     <div className="w-full bg-cream-50 min-h-screen">
       {/* 배너 슬라이더 */}
@@ -127,6 +135,16 @@ export default async function HomePage() {
               진행 중인 다른 제품을 확인해 보세요.
             </p>
             <ProgressCarousel items={progress} />
+          </section>
+        )}
+
+        {/* 인터뷰 섹션 */}
+        {interviews && interviews.length > 0 && (
+          <section>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 text-center">
+              인터뷰
+            </h2>
+            <InterviewCarousel items={interviews} />
           </section>
         )}
 
