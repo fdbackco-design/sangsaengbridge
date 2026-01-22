@@ -1,9 +1,20 @@
 import { createClient } from '@/lib/supabase/server'
+import type { Metadata } from 'next'
 import CaseGrid from '@/components/CaseGrid'
 import { Suspense } from 'react'
 
 interface SearchParams {
   category?: string
+}
+
+export const metadata: Metadata = {
+  title: '성공사례',
+  description: '상생 브릿지의 다양한 성공사례를 확인하세요. 생활용품, 주방용품, 화장품용기 등 카테고리별 제조 성공사례를 제공합니다.',
+  openGraph: {
+    title: '성공사례 - 상생 브릿지',
+    description: '상생 브릿지의 다양한 성공사례를 확인하세요.',
+    url: '/cases',
+  },
 }
 
 async function CasesContent({ category }: { category?: string }) {

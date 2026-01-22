@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm'
 import CaseGrid from '@/components/CaseGrid'
 import CaseDetailImage from '@/components/CaseDetailImage'
 import CaseThumbnailSlider from '@/components/CaseThumbnailSlider'
+import StructuredData from '@/components/StructuredData'
 
 export async function generateMetadata({
   params,
@@ -17,7 +18,10 @@ export async function generateMetadata({
 
   const { data: caseItem } = await supabase
     .from('cases')
-    .select('*')
+    .select(`
+      *,
+      category:case_categories(*)
+    `)
     .eq('slug', slug)
     .single()
 
@@ -27,13 +31,33 @@ export async function generateMetadata({
     }
   }
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sangsaengbridge.com'
+  const images = []
+  if (caseItem.thumbnail_image_1) images.push(caseItem.thumbnail_image_1)
+  if (caseItem.thumbnail_image_2) images.push(caseItem.thumbnail_image_2)
+  if (caseItem.detail_image) images.push(caseItem.detail_image)
+
   return {
-    title: `${caseItem.title} - 상생 브릿지`,
+    title: caseItem.title,
     description: caseItem.summary || caseItem.title,
+    keywords: caseItem.hashtags || [],
     openGraph: {
       title: caseItem.title,
       description: caseItem.summary || caseItem.title,
-      images: caseItem.thumbnail_image_1 ? [caseItem.thumbnail_image_1] : [],
+      type: 'article',
+      url: `${siteUrl}/cases/${slug}`,
+      images: images.length > 0 ? images : [],
+      publishedTime: caseItem.created_at,
+      modifiedTime: caseItem.updated_at,
+      authors: ['상생 브릿지'],
+      section: caseItem.category?.name,
+      tags: caseItem.hashtags || [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: caseItem.title,
+      description: caseItem.summary || caseItem.title,
+      images: images.length > 0 ? [images[0]] : [],
     },
   }
 }
@@ -70,9 +94,47 @@ export default async function CaseDetailPage({
     .neq('id', caseItem.id)
     .limit(3)
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sangsaengbridge.com'
+  const images = []
+  if (caseItem.thumbnail_image_1) images.push(caseItem.thumbnail_image_1)
+  if (caseItem.thumbnail_image_2) images.push(caseItem.thumbnail_image_2)
+  if (caseItem.detail_image) images.push(caseItem.detail_image)
+
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: caseItem.title,
+    description: caseItem.summary || caseItem.title,
+    image: images,
+    datePublished: caseItem.created_at,
+    dateModified: caseItem.updated_at,
+    author: {
+      '@type': 'Organization',
+      name: '상생 브릿지',
+      url: siteUrl,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: '상생 브릿지',
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/logo.svg`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${siteUrl}/cases/${slug}`,
+    },
+    articleSection: caseItem.category?.name,
+    keywords: caseItem.hashtags?.join(', ') || '',
+  }
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <article className="max-w-4xl mx-auto">
+    <>
+      <StructuredData data={articleSchema} />
+      <div className="container mx-auto px-4 py-8">
+        <article className="max-w-4xl mx-auto">
         {/* 썸네일 이미지 슬라이드 */}
         <CaseThumbnailSlider
           thumbnail1={caseItem.thumbnail_image_1}
@@ -129,6 +191,7 @@ export default async function CaseDetailPage({
           <CaseGrid cases={relatedCases} />
         </section>
       )}
-    </div>
+      </div>
+    </>
   )
 }

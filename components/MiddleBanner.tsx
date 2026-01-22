@@ -32,7 +32,7 @@ export default function MiddleBanner({ banners }: MiddleBannerProps) {
                 <Link href={banner.link_url} className="block w-full h-full relative">
                   <Image
                     src={banner.image_url}
-                    alt="중간 배너"
+                    alt="상생 브릿지 중간 배너"
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1280px"
                     className="object-cover rounded-none md:rounded-card"
@@ -43,7 +43,7 @@ export default function MiddleBanner({ banners }: MiddleBannerProps) {
                 <div className="w-full h-full relative">
                   <Image
                     src={banner.image_url}
-                    alt="중간 배너"
+                    alt="상생 브릿지 중간 배너"
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1280px"
                     className="object-cover rounded-none md:rounded-card"

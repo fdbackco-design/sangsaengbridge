@@ -51,7 +51,7 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
               <Link href={banner.link_url} className="block w-full h-full relative">
                 <Image
                   src={banner.image_url}
-                  alt="배너"
+                  alt="상생 브릿지 메인 배너"
                   fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1280px"
                       className="object-cover rounded-card"
@@ -63,7 +63,7 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
               <div className="w-full h-full relative">
                 <Image
                   src={banner.image_url}
-                  alt="배너"
+                  alt="상생 브릿지 메인 배너"
                   fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1280px"
                       className="object-cover rounded-card"

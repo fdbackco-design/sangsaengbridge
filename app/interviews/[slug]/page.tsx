@@ -27,10 +27,23 @@ export async function generateMetadata({
     }
   }
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sangsaengbridge.com'
+
   return {
-    title: `${interview.title} - 상생 브릿지`,
+    title: interview.title,
     description: interview.summary || interview.title,
     openGraph: {
+      title: interview.title,
+      description: interview.summary || interview.title,
+      type: 'article',
+      url: `${siteUrl}/interviews/${slug}`,
+      images: interview.image_url ? [interview.image_url] : [],
+      publishedTime: interview.created_at,
+      modifiedTime: interview.updated_at,
+      authors: ['상생 브릿지'],
+    },
+    twitter: {
+      card: 'summary_large_image',
       title: interview.title,
       description: interview.summary || interview.title,
       images: interview.image_url ? [interview.image_url] : [],
