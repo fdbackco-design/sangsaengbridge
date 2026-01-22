@@ -13,7 +13,7 @@ import AnimatedSection from '@/components/AnimatedSection'
 
 export const metadata: Metadata = {
   title: '홈',
-  description: '150여개 제조 공장 파트너십을 보유한 상생 브릿지에서 최적의 제조 파트너를 찾아보세요. OEM, ODM 서비스로 생활용품, 주방용품, 화장품용기 제조를 지원합니다.',
+  description: '상생 브릿지에서 최적의 제조 파트너를 찾아보세요. OEM, ODM 서비스로 생활용품, 주방용품, 화장품용기 제조를 지원합니다.',
   openGraph: {
     title: '상생 브릿지 - 제조업체와 브랜드를 연결하는 플랫폼',
     description: '150여개 제조 공장 파트너십을 보유한 상생 브릿지에서 최적의 제조 파트너를 찾아보세요.',
