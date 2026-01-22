@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   title: '상생 브릿지 - 제조업체와 브랜드를 연결하는 플랫폼',
   description: '150여개 제조 공장 파트너십을 보유한 상생 브릿지에서 최적의 제조 파트너를 찾아보세요.',
   keywords: '제조, OEM, ODM, 생활용품, 주방용품, 화장품용기',
+  verification: {
+    other: {
+      'naver-site-verification': 'a5a0bc06b2eb5534795554514389a08354a070b2',
+    },
+  },
 }
 
 export default function RootLayout({
