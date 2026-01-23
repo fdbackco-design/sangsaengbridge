@@ -10,7 +10,7 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-soft">
+    <header className="sticky top-0 z-50 bg-white shadow-soft backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* 로고 */}
